@@ -1,6 +1,6 @@
 # Pyrite
 
-![](https:///via.placeholder.com/1920x1080?text=Demo+Screenshot)
+![](https:///via.placeholder.com/1920x1080?text=Demo+Screenshot.png)
 
 A fast and beautiful editor, powered by `Eel` and `Python`
 
