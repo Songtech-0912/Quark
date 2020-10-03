@@ -10,28 +10,80 @@ Pyrite's name sounds like "PyWrite" - because it's designed from the ground up f
 
 Here's what PyRite offers:
 
-* Syntax highlighting of most languages
-
-* File autosaving
-
-* Fast file opening speeds, even on very large files
+* Fast file opening speeds, even on very large files (More testing needed to verify this!) 
 
 * Minimal memory use
 
-* Support for multiple themes
+* File autosaving (Will come soon!)
 
-* Minimalist and distraction-free
+* Syntax highlighting of most languages (Will come soon!)
+
+* Support for multiple themes (Will come soon!)
+
+* Minimalist and distraction-free feature set
+
+### Built with
+
+* HTML & CSS (no SASS or LESS)
+  
+* Mostly (>96%) vanilla javascript, with no libraries (except for `keyboard.js`)
+  
+* Python & `Eel`
 
 ### FAQ
 
+* How is Pyrite different from an editor that I'm used to?
+
+Unlike most text editors, the main point of using Pyrite isn't to have all the best and coolest features. Instead, it's meant to be distraction-free and minimalist. It makes you focus on the code that you're writing, *not* what you write the code with.
+
+* Why is \<insert feature here\> not available?
+
+Pyrite is *designed* to be extremely minimal, with very few configuration options. With that being said though, many features (e.g. find and replace) will come in the future releases.
+
+* What are the keybindings?
+
+There are (as of now) three custom (Pyrite-specific) keyboard shortcuts:
+
+**Save:** `Alt S`
+
+**Save Copy:** `Alt C`
+
+**Create New:** `Alt N`
+
+In addition, these generic keyboard functions will also work:
+
+**Undo:** `Ctrl Z`
+
+**Redo:** `Ctrl Shift Z`
+
+**Copy:** `Ctrl C`
+
+**Cut:** `Ctrl X`
+
+**Paste:** `Ctrl V`
+
+**Select All:**  `Ctrl A`
+
+* I want to use Pyrite for my own projects. Can I do that?
+
+Yes, sure! Because Pyrite is free and open-source software, you're more than welcome to use it for personal purposes. You can even sell it, as long as you place no limitations upon its use.
+
 
 ## Download & Install
+
+For the disk
 
 ## Problems
 
 ### Known Issues
 
-Pyrite is known to suffer from several issues, listed below
+Pyrite is known to suffer from several issues, listed below:
+
+* Paste errors
+* File being edited is not highlighted
+* Font/rendering issues
+
+If you find any other issues, please open an issue on Github. I would greatly appreciate it.
 
 ### Troubleshooting
 

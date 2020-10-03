@@ -12,7 +12,7 @@
 * [MacOS]()
 * [Windows (64-bit)]()
 
-You can find all of these, and other downloads, on the [releases page]().
+You can find all of these, and other downloads, on the [releases page](https://github.com/Songtech-0912/Pyrite/releases).
 
 ## Summary
 
