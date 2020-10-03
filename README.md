@@ -2,7 +2,7 @@
 
 ![](https:///via.placeholder.com/1920x1080?text=Demo+Screenshot.png)
 
-A fast and beautiful editor, powered by `Eel` and `Python`
+A fast and beautiful editor, powered by `Eel` and `Python`. Download it and try it out [here](release_notes/release-0.1.1-alpha.md).
 
 ## Overview
 
@@ -28,6 +28,14 @@ Here's what PyRite offers:
 ## Download & Install
 
 ## Problems
+
+### Known Issues
+
+Pyrite is known to suffer from several issues, listed below
+
+### Troubleshooting
+
+Had a problem installing or running Pyrite?
 
 ## Contributing
 
