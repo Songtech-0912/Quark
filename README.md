@@ -71,7 +71,47 @@ Yes, sure! Because Pyrite is free and open-source software, you're more than wel
 
 ## Download & Install
 
-For the disk
+If you want a ready-to-use version of Pyrite, grab the latest version from the [releases page](https://github.com/Songtech-0912/Pyrite/releases).
+
+Otherwise, follow these steps:
+
+### Get the source code
+
+You must have `git` preinstalled to do this. For information on how to install `git`, read [this](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) page.
+
+Assuming that you have `git`, run this command:
+
+```
+git clone https://github.com/Songtech-0912/Pyrite
+cd Pyrite
+```
+
+### Running from source
+
+You don't actually need to compile Pyrite for it to run. You just need to have `python` and `pip` installed.
+
+First, install `python` from [its website](https://www.python.org/downloads/).
+
+Next, get `pip` from [here](https://pip.pypa.io/en/stable/installing/).
+
+Once you have Python and Pip installed, just run this:
+
+```
+pip install eel
+```
+
+```
+cd src
+python main.py
+```
+
+### Compiling executables
+
+Compiling executables requires `pyinstaller`. Get `pyinstaller` like this:
+
+```
+pip install pyinstaller
+```
 
 ## Problems
 
@@ -87,9 +127,28 @@ If you find any other issues, please open an issue on Github. I would greatly ap
 
 ### Troubleshooting
 
-Had a problem installing or running Pyrite?
+Had a problem installing or running Pyrite? Here are some ways to solve it
+
+* Close localhost ports
+
+By default, Pyrite will use any opened port for its GUI, but if that isn't possible, you can try closing all localhost ports
+
+* Install Chrome/Chromium/any Blink-based browser
+
+Pyrite will work best with Chrome/Chromium preinstalled. Some of its features may not work if you don't have it.
+
+* Launch Pyrite from terminal
+
+Open up a terminal and `cd` into the folder where you downloaded Pyrite. Give it executable priviledges with `chmod a+x`. Then run `./Pyrite` or `Pyrite` (depending on your OS) to launch it.
 
 ## Contributing
+
+To contribute, you can do any of these things:
+
+* Give suggestions about the project: send me an email at jacky.song1020@gmail.com
+* Report bugs: open a new issue and write about an issue you faced
+* Write documentation (coming soon!): Work on Pyrite's documentation (once it's available)
+* Add a pull request to make your personal changes to Pyrite
 
 ## License
 
