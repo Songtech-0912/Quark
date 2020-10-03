@@ -14,7 +14,7 @@
 
 You can find all of these, and other downloads, on the [releases page]().
 
-## Notes
+## Summary
 
 This is Pyrite's **first** release, intended as a proof-of-concept for the concept. It's a *very* eary release, so bugs are expected...well, practically everywhere. There is a lot that has to be done:
 
@@ -38,5 +38,41 @@ In addition, from this point on, I will continue to release a new version of Pyr
 
 To report a bug or an issue:
 
-something...
+### Step 1
+
+From the main repository page, click on the *issues* button.
+
+![](https://guides.github.com/features/issues/navigation-highlight.png)
+
+### Step 2
+
+Press the green *new issue* button
+
+### Step 3
+
+Copy and paste this markdown markup into the editing box:
+
+```markdown
+## Expected Behavior
+
+
+## Actual Behavior
+
+
+## Steps to Reproduce the Problem
+
+  1.
+  1.
+  1.
+
+## Specifications
+
+  - Version:
+  - Platform:
+  - Subsystem:
+```
+
+### Step 4
+
+Fill in the main content of your issue
 
