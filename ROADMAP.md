@@ -4,7 +4,7 @@ This is a roadmap for the Pyrite Project
 
 - [x] Oct 1st
 
-* Basic proof of concept using `Eel` - distribute on Github as release 0.1.1 alpha proof of concept for Win/Mac/Linux
+* Basic proof of concept using `Eel` - distribute on Github as release 0.1.1 alpha
 
   * Able to open and save files
 
@@ -12,13 +12,13 @@ This is a roadmap for the Pyrite Project
 
   * Use toasts (that appear at the bottom of the page) to show a notification when the document is saved/a copy is downloaded
 
-  * Add links to "report an issue" and "Pyrite on Github"
+  * Able to edit more than one file at once
 
 * Right sidebar
 
-  * Zoom in 
+  * Zoom in code
 
-  * Zoom out
+  * Zoom out code
 
 * Basic website with Github Pages and skeletonCSS
 
