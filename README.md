@@ -1,6 +1,6 @@
 # Pyrite
 
-![](https:///via.placeholder.com/1920x1080?text=Demo+Screenshot.png)
+![Screenshot](markdown_assets/hero-image.png)
 
 A fast and beautiful editor, powered by `Eel` and `Python`. Download it and try it out [here](release_notes/release-0.1.1-alpha.md).
 
