@@ -4,6 +4,8 @@
 
 A fast and beautiful editor, powered by `Eel` and `Python`. Download it and try it out [here](release_notes/release-0.1.1-alpha.md).
 
+> Note: It has come to my attention that another developer has previously written a Python text editor of the same name. I did not intend to plagiarize the name of his editor. You can check out his editor [here](https://github.com/zcking/Pyrite).
+
 ## Overview
 
 Pyrite's name sounds like "PyWrite" - because it's designed from the ground up for writing code. Unlike electron-based editors, it doesn't suffer from node package bloat. And, unlike most widget-based editors, its UI is polished and themable. 
