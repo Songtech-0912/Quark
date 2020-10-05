@@ -8,9 +8,9 @@
 
 ## Download it
 
-* [Linux]()
-* [MacOS]()
-* [Windows (64-bit)]()
+* [Linux](https://github.com/Songtech-0912/Pyrite/releases/download/v0.1.1-alpha/Pyrite-GNU-Linux.tar.xz)
+* [MacOS](https://github.com/Songtech-0912/Pyrite/releases/download/v0.1.1-alpha/Pyrite-MacOS-installer.zip)
+* [Windows (64-bit)](https://github.com/Songtech-0912/Pyrite/releases/download/v0.1.1-alpha/pyrite-win-64-bit.zip)
 
 You can find all of these, and other downloads, on the [releases page](https://github.com/Songtech-0912/Pyrite/releases).
 
