@@ -84,9 +84,9 @@ This is a roadmap for the Pyrite Project
 
     * Default Light theme
 
-    * Material Dark theme
+    * Material Dark theme (based on [this](https://material-theme.site/))
 
-    * Material Light theme
+    * Material Light theme (based on [this](https://material-theme.site/))
 
     * Midnight theme
 
