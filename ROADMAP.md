@@ -32,6 +32,10 @@ This is a roadmap for the Pyrite Project
 
   * Make sure that line breaks are preserved when opening files/pasting text
 
+* Implement app tours
+
+  * Update the welcome page to a more modern look 
+
 * More keyboard shortcuts
 
   * Use `Tab` as keyboard shortcut to create a 3 space indent 
