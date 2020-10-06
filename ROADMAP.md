@@ -28,7 +28,9 @@ This is a roadmap for the Pyrite Project
 
 * Autosaving on edit option implemented
 
-* Fix issues with paste
+* Fix issues with paste and opening files
+
+  * Make sure that line breaks are preserved when opening files/pasting text
 
 * More keyboard shortcuts
 
