@@ -24,6 +24,8 @@ Here's what PyRite offers:
 
 * Minimalist and distraction-free feature set
 
+Learn more about Pyrite on its [website](https://songtech-0912.github.io/Pyrite/).
+
 ### Built with
 
 * HTML & CSS (no SASS or LESS)
