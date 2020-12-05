@@ -1,37 +1,36 @@
 # Pyrite
 
-![Screenshot](markdown_assets/hero-image.png)
-
 A fast and beautiful editor, powered by `Eel` and `Python`. Download it and try it out [here](release_notes/release-0.1.1-alpha.md).
 
-> Note: It has come to my attention that another developer has previously written a Python text editor of the same name. I did not intend to plagiarize the name of his editor. You can check out his editor [here](https://github.com/zcking/Pyrite).
+## Announcement :warning:
+
+Pyrite is undergoing a redesign and a complete UI overhaul. All frontend code will be rewritten from scratch. The main goal of this refactoring is to make Pyrite fully responsive, and to keep it up-to-date. You can see my design progress [here](https://www.figma.com/file/mtD74sP2xBowI0fK4n1rZU/Pyrite-Mockups?node-id=0%3A1).
+
+![Screenshot](markdown_assets/hero-image.png)
+
+In addition to this major change, Pyrite will also implement a code of conduct for the first time. This will be the [SCoC](https://github.com/Songtech-0912/SCoC). The terms of this code of conduct are highly permissive and encourage good behavior without radicalizing the community.
 
 ## Overview
+
+> Note: It has come to my attention that another developer has previously written a Python text editor of the same name. I did not intend to plagiarize the name of his editor. You can check out his editor [here](https://github.com/zcking/Pyrite).
 
 Pyrite's name sounds like "PyWrite" - because it's designed from the ground up for writing code. Unlike electron-based editors, it doesn't suffer from node package bloat. And, unlike most widget-based editors, its UI is polished and themable. 
 
 Here's what PyRite offers:
 
 * Fast file opening speeds, even on very large files (More testing needed to verify this!) 
-
 * Minimal memory use
-
 * File autosaving (Will come soon!)
-
 * Syntax highlighting of most languages (Will come soon!)
-
 * Support for multiple themes (Will come soon!)
-
 * Minimalist and distraction-free feature set
 
 Learn more about Pyrite on its [website](https://songtech-0912.github.io/Pyrite/).
 
 ### Built with
 
-* HTML & CSS (no SASS or LESS)
-  
+* HTML & CSS (no SASS or LESS) 
 * Mostly (>96%) vanilla javascript, with no libraries (except for `keyboard.js`)
-  
 * Python & `Eel`
 
 ### FAQ
@@ -200,6 +199,7 @@ Pyrite is released under the [GNU GPLv3 license](https://www.gnu.org/licenses/gp
 ![](https://www.gnu.org/graphics/gplv3-with-text-136x68.png)
 
 The terms of the license are, in brief:
+ * Once you download Pyrite, you own it forever
  * You may use Pyrite without restriction 
  * You may make modifications to its source code
  * You may publish your changes as long as you cite the original work
