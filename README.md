@@ -4,13 +4,13 @@ A fast and beautiful editor, powered by `Eel` and `Python`. Download it and try 
 
 ## Announcement :warning:
 
-Pyrite is undergoing a redesign and a complete UI overhaul. All frontend code will be rewritten from scratch. The main goal of this refactoring is to make Pyrite fully responsive, and to keep it up-to-date. You can see my design progress [here](https://www.figma.com/file/mtD74sP2xBowI0fK4n1rZU/Pyrite-Mockups?node-id=0%3A1).
-
-![Screenshot](markdown_assets/hero-image.png)
+Pyrite is undergoing a redesign and a complete UI overhaul. All frontend code will be rewritten from scratch. The main goal of this refactoring is to make Pyrite fully responsive, and to improve the UI design to match modern standards. You can see my design progress [here](https://www.figma.com/file/mtD74sP2xBowI0fK4n1rZU/Pyrite-Mockups?node-id=0%3A1).
 
 In addition to this major change, Pyrite will also implement a code of conduct for the first time. This will be the [SCoC](https://github.com/Songtech-0912/SCoC). The terms of this code of conduct are highly permissive and encourage good behavior without radicalizing the community.
 
 ## Overview
+
+![Screenshot](markdown_assets/hero-image.png)
 
 > Note: It has come to my attention that another developer has previously written a Python text editor of the same name. I did not intend to plagiarize the name of his editor. You can check out his editor [here](https://github.com/zcking/Pyrite).
 
