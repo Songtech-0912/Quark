@@ -4,7 +4,7 @@ A fast and beautiful editor, powered by `Eel` and `Python`. Download it and try 
 
 ## Announcement :warning:
 
-Pyrite is undergoing a redesign and a complete UI overhaul. All frontend code will be rewritten from scratch. The main goal of this refactoring is to make Pyrite fully responsive, and to improve the UI design to match modern standards. You can see my design progress [here](https://www.figma.com/file/mtD74sP2xBowI0fK4n1rZU/Pyrite-Mockups?node-id=0%3A1).
+Pyrite is undergoing a redesign and a complete UI overhaul. All frontend code will be rewritten from scratch with OpenGL and `Pyglet` for speed. The main goal of this refactoring is to make Pyrite fully responsive, and to improve the UI design to match modern standards. You can see my design progress [here](https://www.figma.com/file/mtD74sP2xBowI0fK4n1rZU/Pyrite-Mockups?node-id=0%3A1). Once V2 is released, Pyrite will also change to a public domain license for minimal licensing hassle.
 
 In addition to this major change, Pyrite will also implement a code of conduct for the first time. This will be the [SCoC](https://github.com/Songtech-0912/SCoC). The terms of this code of conduct are highly permissive and encourage good behavior without radicalizing the community.
 
