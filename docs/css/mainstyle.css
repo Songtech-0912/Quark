@@ -1,0 +1,46 @@
+body {
+    background-color: #020a13;
+    color: #fffffa;
+}
+.screenshot {
+  display: block;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(2, 10, 19)), url("https://raw.githubusercontent.com/Songtech-0912/Pyrite/master/assets/hero-image.png");
+  width: 98rem;
+  height: 28rem;
+  background-size: cover;
+  margin: 2.5rem auto ;
+}
+
+.space-right, .space-left {
+    margin: 0 0.8rem;
+}
+
+.container {
+  max-width: 100rem; }
+.main-area {
+    max-width: 70rem ; }
+.header {
+  margin-top: 6rem;
+  text-align: center; }
+.value-prop {
+  margin-top: 1rem; }
+.value-props {
+  margin-top: 4rem;
+  margin-bottom: 4rem; }
+.value-img {
+  display: block;
+  text-align: center;
+  max-width: 7rem;
+  margin: 2.5rem auto ; }
+.example-grid .column,
+.example-grid .columns {
+  background: #EEE;
+  text-align: center;
+  border-radius: 4px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  height: 30px;
+  line-height: 30px;
+  margin-bottom: .75rem;
+  font-weight: 600;
+  letter-spacing: .1rem; }
