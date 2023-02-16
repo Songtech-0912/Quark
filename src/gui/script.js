@@ -43,6 +43,7 @@ addMenuElement("File", "save", "Save");
 addMenuElement("File", "open", "Open file");
 addMenuElement("File", "openRecent", "Open recent");
 addMenuElement("File", "openLastSession", "Reopen last session");
+addMenuElement("File", "quit", "Quit");
 addMenuElement("Edit", "undo", "Undo");
 addMenuElement("Edit", "redo", "Redo");
 addMenuElement("Edit", "cut", "Cut");
@@ -102,6 +103,9 @@ menubar.addEventListener("click", function(event) {
     case "new":
       newFile();
       break;
+    case "quit":
+      quit();
+      break;
   }
 });
 
@@ -126,4 +130,8 @@ function textareaLoadContent() {
   handleLineNumbers();
   let textContent = localStorage.getItem("textContent");
   textarea.value = textContent;
+}
+
+function quit() {
+  pywebview.api.quit()
 }
