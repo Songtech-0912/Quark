@@ -1,4 +1,5 @@
-import eel
-eel.init('gui')
-eel.start('index.html', size=(1440, 900), port=0)
+import webview
 
+if __name__ == "__main__":
+  webview.create_window("Quark", "gui/index.html", min_size=(1440, 900))
+  webview.start()
