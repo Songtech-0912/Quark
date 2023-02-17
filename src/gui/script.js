@@ -22,6 +22,41 @@ function redo() {
     document.execCommand("redo");
 }
 
+function openFile() {
+  pywebview.api.open_file().then(function(response) {
+    let file = response.file;
+    let filebuffer = {}
+    filebuffer.path = file[0];
+    filebuffer.contents = file[1]
+    buffers.addFile(filebuffer);
+    buffers.setCurrentFile(filebuffer);
+    textarea.value = filebuffer.contents;
+    handleLineNumbers();
+  })
+}
+
+function saveFile() {
+  let file = buffers.getCurrentFile();
+  pywebview.api.save_file(file.path, textarea.value);
+}
+
+let buffers = {
+  files: [],
+  current: {},
+
+  addFile(filebuffer) {
+    this.files.push(filebuffer)
+  },
+
+  setCurrentFile(filebuffer) {
+    this.current = filebuffer
+  },
+
+  getCurrentFile() {
+    return this.current
+  }
+}
+
 const menubar = document.querySelector("#menubar");
 const textarea = document.querySelector("textarea");
 const lineNumbers = document.querySelector('.line-numbers')
@@ -85,10 +120,6 @@ function newFile() {
   log("Created new file");
 }
 
-function saveFile() {
-  log("Quark auto-saves your work :)");
-}
-
 for (let menuItem of menus_list) {
   let menuElement = createMenubarElement(menuItem);
   let menuContents = document.createElement("div");
@@ -103,6 +134,18 @@ menubar.addEventListener("click", function(event) {
     case "new":
       newFile();
       break;
+    case "save":
+      log("Quark auto-saves your work :)");
+      break;
+    case "open":
+      openFile();
+      break;
+    case "undo":
+      undo();
+      break;
+    case "redo":
+      redo();
+      break;
     case "quit":
       quit();
       break;
@@ -111,6 +154,9 @@ menubar.addEventListener("click", function(event) {
 
 window.addEventListener('DOMContentLoaded', handleLineNumbers);
 textarea.addEventListener('keyup', handleLineNumbers);
+
+// Autosave on every change
+textarea.addEventListener('input', saveFile);
 
 function handleLineNumbers() {
   const numberOfLines = textarea.value.split('\n').length
