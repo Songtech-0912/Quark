@@ -41,7 +41,7 @@ Quark is *designed* to be extremely minimal, with very few configuration options
 
 * I want to use Quark for my own projects. Can I do that?
 
-Yes, sure! Because Quark is free and open-source software, you're more than welcome to use it for personal purposes. You can even sell it, as long as you place no limitations upon its use.
+Yes, sure! Because Quark is free and open-source software, you're more than welcome to use it for personal purposes. You can even sell it, really, do whatever you want with it!
 
 
 ## Download & Install
@@ -80,80 +80,6 @@ cd src
 python main.py
 ```
 
-### Compiling executables
-
-Compiling executables requires `pyinstaller`. Get `pyinstaller` like this:
-
-```
-pip install pyinstaller
-```
-
-Once you have `pyinstaller` installed, open a terminal in your `Quark` source code directory. Paste this command in:
-
-```
-python -m eel main.py gui --onefile --noconsole --name Quark --exclude pyinstaller
-```
-
-### With a Virtual Environment (Currently MacOS and GNU/Linux only)
-
-You can use a virtual environment to run pyinstaller (especially if you have a lot of Python packages). To do this, open a terminal in your `Quark` source code directory, and enter in this:
-
-```
-cd ..
-```
-
-Then enter in this in your terminal (without the dollar signs):
-
-```
-$ cp Quark env
-$ python3 -m venv env
-$ source env/bin/activate
-```
-
-We have to install `pyinstaller` and `eel` before doing any compiling. Use the same commands as before, or copy the two listed below (without dollar signs):
-
-```
-$ pip install eel
-$ pip install pyinstaller
-```
-
-Now, you're ready to start compiling. To compile, enter the main folder, and run the same `pyinstaller` command as before:
-
-```
-cd env
-python -m eel main.py gui --onefile --noconsole --name Quark --exclude pyinstaller
-```
-
-Your compiled executable will be located in `./dist`.
-
-## Problems
-
-### Known Issues
-
-Quark is known to suffer from several issues, listed below:
-
-* Paste errors
-* File being edited is not highlighted
-* Font/rendering issues
-
-If you find any other issues, please open an issue on Github. I would greatly appreciate it.
-
-### Troubleshooting
-
-Had a problem installing or running Quark? Here are some ways to solve it
-
-* Close localhost ports
-
-By default, Quark will use any opened port for its GUI, but if that isn't possible, you can try closing all localhost ports
-
-* Install Chrome/Chromium/any Blink-based browser
-
-Quark will work best with Chrome/Chromium preinstalled. Some of its features may not work if you don't have it.
-
-* Launch Quark from terminal
-
-Open up a terminal and `cd` into the folder where you downloaded Quark. Give it executable priviledges with `chmod a+x`. Then run `./Quark` or `Quark` (depending on your OS) to launch it.
-
 ## Contributing
 
 To contribute, you can do any of these things:
@@ -166,13 +92,4 @@ To contribute, you can do any of these things:
 ## License
 
 
-Quark is released under the [GNU GPLv3 license](https://www.gnu.org/licenses/gpl.html) (or any future versions of the license).
-
-![](https://www.gnu.org/graphics/gplv3-with-text-136x68.png)
-
-The terms of the license are, in brief:
- * Once you download Quark, you own it forever
- * You may use Quark without restriction
- * You may make modifications to its source code
- * You may publish your changes as long as you cite the original work
- * Quark will always remain free(libre) software
+Quark is dedicated to the public domain. No limitations apply to using, sharing, or distributing the app.
