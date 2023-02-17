@@ -29,31 +29,40 @@ function openFile() {
     filebuffer.path = file[0];
     filebuffer.contents = file[1]
     buffers.addFile(filebuffer);
-    buffers.setCurrentFile(filebuffer);
+    buffers.setCurrentFile(file[0]);
     textarea.value = filebuffer.contents;
+    buffers.setSaved()
     handleLineNumbers();
   })
 }
 
 function saveFile() {
-  let file = buffers.getCurrentFile();
-  pywebview.api.save_file(file.path, textarea.value);
+  let file_path = buffers.getCurrentFile();
+  pywebview.api.save_file(file_path, textarea.value);
+}
+
+function switchFile() {
 }
 
 let buffers = {
   files: [],
-  current: {},
+  current: "",
+  is_saved: false,
 
   addFile(filebuffer) {
     this.files.push(filebuffer)
   },
 
-  setCurrentFile(filebuffer) {
-    this.current = filebuffer
+  setCurrentFile(path) {
+    this.current = path
   },
 
   getCurrentFile() {
     return this.current
+  },
+
+  setSaved() {
+    this.is_saved = true
   }
 }
 
@@ -104,20 +113,36 @@ function createMenuContents(name) {
   let menuContents = document.createElement("div");
   menuContents.classList.add("dropdown-content");
   let submenus = Object.keys(menus[name]);
-  console.log(submenus)
   for (let submenu of submenus) {
     let description = menus[name][submenu]
     let label = document.createElement("p");
     label.innerText = description;
     label.dataset.menuId = submenu;
     menuContents.appendChild(label);
-    console.log(label)
   }
   return menuContents
 }
 
 function newFile() {
   log("Created new file");
+}
+
+function handleSave() {
+  if (!buffers.is_saved) {
+    pywebview.api.save_new_file().then(function(response) {
+      let file = response.file;
+      console.log(file)
+      let filebuffer = {}
+      filebuffer.path = file;
+      filebuffer.contents = textarea.value;
+      buffers.addFile(filebuffer);
+      buffers.setCurrentFile(file);
+      buffers.setSaved()
+    })
+    // Create save dialog
+  } else {
+    log("Quark auto-saves your work :)");
+  }
 }
 
 for (let menuItem of menus_list) {
@@ -129,13 +154,12 @@ for (let menuItem of menus_list) {
 // Event delegation for menubar elements
 menubar.addEventListener("click", function(event) {
   let target = event.target;
-  console.log(target.dataset.menuId);
   switch (target.dataset.menuId) {
     case "new":
       newFile();
       break;
     case "save":
-      log("Quark auto-saves your work :)");
+      handleSave()
       break;
     case "open":
       openFile();
@@ -156,7 +180,15 @@ window.addEventListener('DOMContentLoaded', handleLineNumbers);
 textarea.addEventListener('keyup', handleLineNumbers);
 
 // Autosave on every change
-textarea.addEventListener('input', saveFile);
+textarea.addEventListener('input', textareaHandler);
+
+function textareaHandler() {
+  if (!buffers.is_saved) {
+    handleSave()
+  } else {
+    saveFile()
+  }
+}
 
 function handleLineNumbers() {
   const numberOfLines = textarea.value.split('\n').length
