@@ -28,8 +28,9 @@ body {
   gap: 10px;
   font-family: monospace;
   line-height: 150%;
+  overflow
   padding: 1rem;
-	background: #000b14;
+  background: #000b14;
 }
 
 .line-numbers {
@@ -58,7 +59,7 @@ body {
     color: #aaa;
     background-color: #000b14;
     margin: 0.3rem auto;
-    padding: 0.5rem 0.7rem ;
+    padding: 0.25rem 0.5rem ;
     border: none;
     cursor: pointer;
     font-size: 0.8rem;
@@ -206,6 +207,7 @@ textarea {
  	resize: none;
 	width: 100%;
 	background: #000b14;
+	overflow-y: scroll;
 }
 
 textarea::focus {
