@@ -12,8 +12,6 @@ Quark is undergoing a redesign and a complete UI overhaul. All frontend code wil
 
 ## Overview
 
-![Screenshot](assets/hero-image.png)
-
 Quark is a hackable, minimalist code editor. Unlike electron-based editors, it doesn't suffer from node package bloat. And, unlike most widget-based editors, its UI is polished and themable.
 
 Here's what Quark offers:
