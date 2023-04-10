@@ -2,6 +2,10 @@
 
 A fast and beautiful editor, powered by `pywebview` and `Python`. Download it and try it out [here](release_notes/release-0.1.1-alpha.md).
 
+![UI mockup of Quark](assets/mockup.png)
+
+_Note: this is just a mockup, Quark is WIP_
+
 ## Announcement :warning:
 
 Quark is undergoing a redesign and a complete UI overhaul. All frontend code will be rewritten from scratch with OpenGL and `Pyglet` for speed. The main goal of this refactoring is to make Quark fully responsive, and to improve the UI design to match modern standards. You can see my design progress [here](https://www.figma.com/file/mtD74sP2xBowI0fK4n1rZU/Quark-Mockups?node-id=0%3A1). Once V2 is released, Quark will also change to a public domain license for minimal licensing hassle.
