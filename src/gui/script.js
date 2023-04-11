@@ -13,12 +13,10 @@ function log(value) {
 // Undo/Redo operations
 
 function undo() {
-    document.querySelector("textarea").focus(); //make selected active
     document.execCommand("undo");
 }
 
 function redo() {
-    document.querySelector("textarea").focus(); //make selected active
     document.execCommand("redo");
 }
 
@@ -30,7 +28,7 @@ function openFile() {
     filebuffer.contents = file[1]
     buffers.addFile(filebuffer);
     buffers.setCurrentFile(file[0]);
-    textarea.value = filebuffer.contents;
+    editor.getSession().setValue(filebuffer.contents);
     buffers.setSaved()
     handleLineNumbers();
   })
@@ -38,11 +36,19 @@ function openFile() {
 
 function saveFile() {
   let file_path = buffers.getCurrentFile();
-  pywebview.api.save_file(file_path, textarea.value);
+  pywebview.api.save_file(file_path, editor.getValue());
 }
 
 function switchFile() {
 }
+
+let editor = ace.edit("editor");
+editor.setShowPrintMargin(false);
+editor.setTheme("ace/theme/one_dark");
+editor.setOption ("wrap", true);
+// currently hardcoded to edit python
+editor.session.setMode("ace/mode/python");
+editor.container.style.lineHeight = 1.5
 
 let buffers = {
   files: [],
@@ -67,7 +73,6 @@ let buffers = {
 }
 
 const menubar = document.querySelector("#menubar");
-const textarea = document.querySelector("textarea");
 const lineNumbers = document.querySelector('.line-numbers')
 
 let menus = {
@@ -134,7 +139,7 @@ function handleSave() {
       console.log(file)
       let filebuffer = {}
       filebuffer.path = file;
-      filebuffer.contents = textarea.value;
+      filebuffer.contents = editor.getValue();
       buffers.addFile(filebuffer);
       buffers.setCurrentFile(file);
       buffers.setSaved()
@@ -176,39 +181,38 @@ menubar.addEventListener("click", function(event) {
   }
 });
 
-window.addEventListener('DOMContentLoaded', handleLineNumbers);
-textarea.addEventListener('keyup', handleLineNumbers);
+// window.addEventListener('DOMContentLoaded', handleLineNumbers);
+// textarea.addEventListener('keyup', handleLineNumbers);
 
-// Autosave on every change
-textarea.addEventListener('input', textareaHandler);
+// // Autosave on every change
+// textarea.addEventListener('input', textareaHandler);
 
-function textareaHandler() {
-  if (!buffers.is_saved) {
-    handleSave()
-  } else {
-    saveFile()
-  }
-}
+// function textareaHandler() {
+//   if (!buffers.is_saved) {
+//     handleSave()
+//   } else {
+//     saveFile()
+//   }
+// }
 
-function handleLineNumbers() {
-  const numberOfLines = textarea.value.split('\n').length
+// function handleLineNumbers() {
+//   const numberOfLines = textarea.value.split('\n').length
+//   lineNumbers.innerHTML = Array(numberOfLines)
+//     .fill('<span></span>')
+//   .join('')
+// }
 
-  lineNumbers.innerHTML = Array(numberOfLines)
-    .fill('<span></span>')
-    .join('')
-}
+// function textareaSetContent() {
+//   handleLineNumbers();
+//   let textContent = textarea.value;
+//   localStorage.setItem("textContent", textContent);
+// }
 
-function textareaSetContent() {
-  handleLineNumbers();
-  let textContent = textarea.value;
-  localStorage.setItem("textContent", textContent);
-}
-
-function textareaLoadContent() {
-  handleLineNumbers();
-  let textContent = localStorage.getItem("textContent");
-  textarea.value = textContent;
-}
+// function textareaLoadContent() {
+//   handleLineNumbers();
+//   let textContent = localStorage.getItem("textContent");
+//   textarea.value = textContent;
+// }
 
 function quit() {
   pywebview.api.quit()

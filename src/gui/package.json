@@ -1,0 +1,13 @@
+{
+  "name": "gui",
+  "version": "1.0.0",
+  "description": "GUI for Quark",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yuxuan Song",
+  "license": "Unlicense",
+  "dependencies": {
+    "ace-builds": "^1.15.2"
+  }
+}
