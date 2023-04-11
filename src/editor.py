@@ -36,5 +36,5 @@ class Api():
 
 def main():
   api = Api()
-  window = webview.create_window("Quark", "gui/index.html", width=1000, height=600, js_api=api, frameless=True, resizable=True, easy_drag=False)
+  window = webview.create_window("Quark", "gui/index.html", width=1080, height=760, js_api=api, frameless=True, resizable=True, easy_drag=False)
   webview.start(debug=True)
