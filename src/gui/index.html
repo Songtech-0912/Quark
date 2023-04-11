@@ -9,35 +9,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="./fonts/fonts.css" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' />
   </head>
   <body>
-    <div id="menubar"></div>
+    <div class="titlebar pywebview-drag-region">
+      <div class="titlebar-spanner">
+        <p>Quark</p>
+      </div>
+      <div class="window-icons">
+        <!--Minimize icon-->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+        </svg>
+        <!--Maximise icon-->
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7 5c-1.103 0-2 .897-2 2v10c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2H7zm0 12V7h10l.002 10H7z"></path>
+        </svg>
+
+        <!--Close icon-->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </div>
+    </div>
+    <nav id="menubar"></nav>
     <div class="editor-container">
-      <div class="editor__panel">
+      <div class="editor-sidebar">
         <details open>
           <summary>Opened Files</summary>
-          <!--
-          <p class="buttons highlighted" id="f1">New file</p>
-          <p class="buttons" id="f5">Empty file</p>
-          -->
         </details>
+        <i class='bx bx-minus'></i>
       </div>
-
-      <div class="editor">
-        <div class="line-numbers">
-          <span></span>
-        </div>
-        <textarea class="language-markdown" spellcheck=false>// Write something here...</textarea>
+      <div class="editor-frame">
+        <div id="editor"></div>
       </div>
-
-      <div class="editor_sidebar">
-        <!--Icons from Feathericons-->
-        <i class="icon icon-zoom-in"></i>
-        <i class="icon icon-zoom-out"></i>
-      </div>
-
       <div id="toast" hidden></div>
     </div>
+    <script type="text/javascript" src="./node_modules/ace-builds/src-min-noconflict/ace.js"></script>
     <script type="text/javascript" src="./script.js"></script>
   </body>
 </html>
