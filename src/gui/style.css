@@ -98,17 +98,6 @@ body {
   display: block;
 }
 
-/* Highlight dropdown links when hovered over */
-.dropdown-content a:hover {
-    background-color: #193349;
-
-}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
 /* Radial Out Transition - forked from HoverCSS */
 .hvr-radial-out {
   display: inline-block;
