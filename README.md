@@ -8,28 +8,26 @@ _Note: this is just a mockup, Quark is WIP_
 
 ## Announcement :warning:
 
-Quark is undergoing a redesign and a complete UI overhaul. All frontend code will be rewritten from scratch with OpenGL and `Pyglet` for speed. The main goal of this refactoring is to make Quark fully responsive, and to improve the UI design to match modern standards. You can see my design progress [here](https://www.figma.com/file/mtD74sP2xBowI0fK4n1rZU/Quark-Mockups?node-id=0%3A1). Once V2 is released, Quark will also change to a public domain license for minimal licensing hassle.
+Quark is undergoing a redesign and a complete UI overhaul and being heavily developed to reach production-ready level. Expect a **lot** of breaking changes!
 
 ## Overview
 
-Quark is a hackable, minimalist code editor. Unlike electron-based editors, it doesn't suffer from node package bloat. And, unlike most widget-based editors, its UI is polished and themable.
+Quark is a hackable, minimalist code editor. Unlike electron-based editors, it doesn't suffer from node package bloat. And, unlike most widget-based editors, its UI is polished and modern.
 
 Here's what Quark offers:
 
 * Fast file opening speeds, even on very large files (More testing needed to verify this!)
 * Minimal memory use
 * File autosaving
-* Syntax highlighting of most languages (Will come soon!)
-* Support for multiple themes (Will come soon!)
+* Syntax highlighting of most languages
+* Classic One Dark theme
 * Minimalist and distraction-free feature set
 
 Learn more about Quark on its [website](https://songtech-0912.github.io/Quark/).
 
-### Built with
+### Usage
 
-* HTML & CSS (no SASS or LESS)
-* Mostly (>96%) vanilla javascript, with no libraries (except for `keyboard.js`)
-* Python & `pywebview`
+Keyboard shortcuts: see https://github.com/ajaxorg/ace/wiki/Default-Keyboard-Shortcuts
 
 ### FAQ
 
@@ -39,18 +37,15 @@ Unlike most text editors, the main point of using Quark isn't to have all the be
 
 * Why is \<insert feature here\> not available?
 
-Quark is *designed* to be extremely minimal, with very few configuration options. With that being said though, many features (e.g. find and replace) will come in the future releases.
+Quark is *designed* to be extremely minimal, with very few configuration options. That being said tho, most features you'd expect out of a modern editor (like search and replace) are built-in.
 
 * I want to use Quark for my own projects. Can I do that?
 
 Yes, sure! Because Quark is free and open-source software, you're more than welcome to use it for personal purposes. You can even sell it, really, do whatever you want with it!
 
-
 ## Download & Install
 
-If you want a ready-to-use version of Quark, grab the latest version from the [releases page](https://github.com/Songtech-0912/Quark/releases).
-
-Otherwise, follow these steps:
+Ready-to-use binaries are not yet available for Quark, though they are in process of being developed. For now, running from source is the primary option.
 
 ### Get the source code
 
@@ -67,26 +62,31 @@ cd Quark
 
 You don't actually need to compile Quark for it to run. You just need to have `python` and `pip` installed.
 
-First, install `python` from [its website](https://www.python.org/downloads/).
-
-Next, get `pip` from [here](https://pip.pypa.io/en/stable/installing/).
-
 Once you have Python and Pip installed, just run this:
 
 ```
-pip install pywebview
+pip install -r requirements.txt
 ```
+
+On Mac and Linux:
 
 ```
 cd src
-python main.py
+./quark
+```
+
+On Windows:
+
+```
+cd src
+python quark
 ```
 
 ## Contributing
 
 To contribute, you can do any of these things:
 
-* Give suggestions about the project: send me an email at jacky.song1020@gmail.com
+* Give suggestions about the project: send me an email at almey0721@gmail.com
 * Report bugs: open a new issue and write about an issue you faced
 * Write documentation (coming soon!): Work on Quark's documentation (once it's available)
 * Add a pull request to make your personal changes to Quark
