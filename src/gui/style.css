@@ -188,7 +188,6 @@ body {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   will-change: transform, opacity;
   overflow: hidden;
-  contain: content;
 }
 #toast[hidden] {
   transform: translateX(-50%) translateY(120%);
@@ -236,4 +235,24 @@ body {
 
 .icon-zoom-out::before {
   background: url("icons/zoom-out.svg");
+}
+
+.command-bar {
+  display: none;
+  position: absolute;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.command-bar input {
+  margin: 10rem auto;
+  height: 2.5rem;
+  width: 25rem;
+  padding: 0.5rem;
+  font-family: monospace;
+  background-color: #282C34;
+  border-radius: 0.25rem;
+  color: #aaa;
 }

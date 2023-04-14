@@ -10,28 +10,58 @@ function log(value) {
     }, 800);
 }
 
-// Undo/Redo operations
-
 function undo() {
-    document.execCommand("undo");
+    editor.session.getUndoManager().undo();
 }
 
 function redo() {
-    document.execCommand("redo");
+    editor.session.getUndoManager().redo();
+}
+
+function cut() {
+    let copyText = editor.getCopyText();
+    editor.insert("");
+    navigator.clipboard.writeText(copyText).then(function(){
+        log("Copied!");
+    });
+}
+
+function copy() {
+    let copyText = editor.getCopyText();
+    navigator.clipboard.writeText(copyText).then(function(){
+        log("Copied!");
+    });
+}
+
+// TODO refactor this function preferably with clipboardjs
+// because this code is really not pretty
+function paste() {
+        navigator.clipboard.read().then((data) => {
+            for (let i = 0; i < data.length; i++) {
+                if (data[i].types.includes("text/plain")) {
+                    data[i].getType("text/plain").then((blob) => {
+                        blob.text().then((text) => {
+                            editor.session.insert(editor.getCursorPosition(), text);
+                        });
+                    });
+                } else {
+                    log("Error: Cannot paste non-plain text into editor");
+                }
+            }
+        });
 }
 
 function openFile() {
   pywebview.api.open_file().then(function(response) {
     let file = response.file;
-    let filebuffer = {}
+    let filebuffer = {};
     filebuffer.path = file[0];
-    filebuffer.contents = file[1]
+    filebuffer.contents = file[1];
     buffers.addFile(filebuffer);
     buffers.setCurrentFile(file[0]);
     editor.getSession().setValue(filebuffer.contents);
-    buffers.setSaved()
-    handleLineNumbers();
-  })
+    buffers.setSaved();
+  });
 }
 
 function saveFile() {
@@ -46,9 +76,9 @@ let editor = ace.edit("editor");
 editor.setShowPrintMargin(false);
 editor.setTheme("ace/theme/one_dark");
 editor.setOption ("wrap", true);
-// currently hardcoded to edit python
+// currently default syntax highlight is python
 editor.session.setMode("ace/mode/python");
-editor.container.style.lineHeight = 1.5
+editor.container.style.lineHeight = 1.5;
 
 let buffers = {
   files: [],
@@ -56,24 +86,24 @@ let buffers = {
   is_saved: false,
 
   addFile(filebuffer) {
-    this.files.push(filebuffer)
+    this.files.push(filebuffer);
   },
 
   setCurrentFile(path) {
-    this.current = path
+    this.current = path;
   },
 
   getCurrentFile() {
-    return this.current
+    return this.current;
   },
 
   setSaved() {
-    this.is_saved = true
+    this.is_saved = true;
   }
-}
+};
 
 const menubar = document.querySelector("#menubar");
-const lineNumbers = document.querySelector('.line-numbers')
+const lineNumbers = document.querySelector('.line-numbers');
 
 let menus = {
   "File": {},
@@ -81,10 +111,10 @@ let menus = {
   "View": {},
   "Settings": {},
   "Help": {}
-}
+};
 
 function addMenuElement(menu, name, description) {
-  menus[menu][name] = description
+  menus[menu][name] = description;
 }
 
 addMenuElement("File", "new", "New");
@@ -92,6 +122,7 @@ addMenuElement("File", "save", "Save");
 addMenuElement("File", "open", "Open file");
 addMenuElement("File", "openRecent", "Open recent");
 addMenuElement("File", "openLastSession", "Reopen last session");
+addMenuElement("File", "command", "Command bar");
 addMenuElement("File", "quit", "Quit");
 addMenuElement("Edit", "undo", "Undo");
 addMenuElement("Edit", "redo", "Redo");
@@ -111,7 +142,7 @@ function createMenubarElement(name) {
   `;
   let menuContents = createMenuContents(name);
   menubarElement.appendChild(menuContents);
-  return menubarElement
+  return menubarElement;
 }
 
 function createMenuContents(name) {
@@ -119,13 +150,13 @@ function createMenuContents(name) {
   menuContents.classList.add("dropdown-content");
   let submenus = Object.keys(menus[name]);
   for (let submenu of submenus) {
-    let description = menus[name][submenu]
+    let description = menus[name][submenu];
     let label = document.createElement("p");
     label.innerText = description;
     label.dataset.menuId = submenu;
     menuContents.appendChild(label);
   }
-  return menuContents
+  return menuContents;
 }
 
 function newFile() {
@@ -136,14 +167,14 @@ function handleSave() {
   if (!buffers.is_saved) {
     pywebview.api.save_new_file().then(function(response) {
       let file = response.file;
-      console.log(file)
-      let filebuffer = {}
+      console.log(file);
+      let filebuffer = {};
       filebuffer.path = file;
       filebuffer.contents = editor.getValue();
       buffers.addFile(filebuffer);
       buffers.setCurrentFile(file);
-      buffers.setSaved()
-    })
+      buffers.setSaved();
+    });
     // Create save dialog
   } else {
     log("Quark auto-saves your work :)");
@@ -164,7 +195,7 @@ menubar.addEventListener("click", function(event) {
       newFile();
       break;
     case "save":
-      handleSave()
+      handleSave();
       break;
     case "open":
       openFile();
@@ -178,41 +209,57 @@ menubar.addEventListener("click", function(event) {
     case "quit":
       quit();
       break;
+    case "command":
+      commandBarHandler();
+      break;
+    case "copy":
+      copy();
+      break;
+    case "cut":
+      cut();
+      break;
+    case "paste":
+      paste();
+      break
   }
 });
 
 // window.addEventListener('DOMContentLoaded', handleLineNumbers);
-// textarea.addEventListener('keyup', handleLineNumbers);
+// For autosave on every change
+document.querySelector("#editor").addEventListener('keyup', saveHandler);
+
+// Minimize, maximise, quit
+minimizeIcon = document.querySelector("#window-min");
+maxmizeIcon = document.querySelector("#window-max")
+closeIcon = document.querySelector("#window-close")
+
+closeIcon.addEventListener("click", quit);
 
 // // Autosave on every change
 // textarea.addEventListener('input', textareaHandler);
 
-// function textareaHandler() {
-//   if (!buffers.is_saved) {
-//     handleSave()
-//   } else {
-//     saveFile()
-//   }
-// }
+function saveHandler() {
+  if (!buffers.is_saved) {
+    handleSave()
+  } else {
+    saveFile()
+  }
+}
 
-// function handleLineNumbers() {
-//   const numberOfLines = textarea.value.split('\n').length
-//   lineNumbers.innerHTML = Array(numberOfLines)
-//     .fill('<span></span>')
-//   .join('')
-// }
-
-// function textareaSetContent() {
-//   handleLineNumbers();
-//   let textContent = textarea.value;
-//   localStorage.setItem("textContent", textContent);
-// }
-
-// function textareaLoadContent() {
-//   handleLineNumbers();
-//   let textContent = localStorage.getItem("textContent");
-//   textarea.value = textContent;
-// }
+function commandBarHandler() {
+  let commandBarContainer = document.querySelector(".command-bar");
+  let commandBar = document.querySelector(".command-bar input");
+  commandBarContainer.style.display = "flex";
+  commandBar.addEventListener('keyup', function (e) {
+    if (e.key === 'Enter' || e.keyCode === 13) {
+        commandBarContainer.style.display = "none";
+        eval(commandBar.value);
+    }
+    if (e.key === 'Escape' || e.keyCode === 111) {
+        commandBarContainer.style.display = "none";    
+    }
+});
+}
 
 function quit() {
   pywebview.api.quit()
