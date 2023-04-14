@@ -1,6 +1,10 @@
 #!/usr/bin/python3
 
 from editor import main
+import sys
 
 if __name__ == "__main__":
-  main()
+  debug = False
+  if "--debug" in sys.argv:
+    debug = True
+  main(debug)
