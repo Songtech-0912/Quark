@@ -4,3 +4,4 @@ testing.txt
 node_modules*/
 __pycache__
 pnpm-lock.yaml
+index.css.map
