@@ -1,46 +1,133 @@
 body {
-    background-color: #020a13;
-    color: #fffffa;
-}
-.screenshot {
-  display: block;
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(2, 10, 19)), url("https://raw.githubusercontent.com/Songtech-0912/Pyrite/master/assets/hero-image.png");
-  width: 98rem;
-  height: 28rem;
-  background-size: cover;
-  margin: 2.5rem auto ;
-}
-
-.space-right, .space-left {
-    margin: 0 0.8rem;
+  color: #fffffa;
+  display: flex;
+  flex-direction: column;
+  background-color: #1A1C20;
+  font-family: "Inter", Sans-Serif;
 }
 
 .container {
-  max-width: 100rem; }
-.main-area {
-    max-width: 70rem ; }
-.header {
-  margin-top: 6rem;
-  text-align: center; }
-.value-prop {
-  margin-top: 1rem; }
-.value-props {
-  margin-top: 4rem;
-  margin-bottom: 4rem; }
-.value-img {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 10rem auto;
+}
+@media screen and (max-width: 1024px) {
+  .container {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+  }
+}
+
+.header h1 {
+  font-size: 4.25rem;
   text-align: center;
-  max-width: 7rem;
-  margin: 2.5rem auto ; }
-.example-grid .column,
-.example-grid .columns {
-  background: #EEE;
+  margin: 0.5rem 0;
+}
+
+.header h2 {
+  font-size: 1.3rem;
   text-align: center;
-  border-radius: 4px;
+  margin-bottom: 2rem;
+}
+
+.button {
+  padding: 1rem 2rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  color: #fffffa;
+}
+
+.hero-btns {
+  margin: 2.5rem auto;
+  display: flex;
+  justify-content: center;
+}
+
+.button-primary {
+  background-color: #282C34;
+  margin-right: 0.5rem;
+}
+
+.screenshot {
+  position: relative;
+  display: flex;
+}
+
+.screenshot img {
+  width: 90%;
+  height: auto;
+  margin: auto;
+  border-radius: 0.25rem;
+}
+
+.screenshot .overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #1A1C20);
+}
+
+.features {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  justify-content: space-evenly;
+}
+@media screen and (max-width: 768px) {
+  .features {
+    flex-direction: column;
+  }
+}
+
+.features div {
+  width: 25%;
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+  align-items: center;
+}
+@media screen and (max-width: 768px) {
+  .features div {
+    margin-bottom: 2rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  .features div {
+    width: 50%;
+  }
+}
+
+.features div img {
+  width: 40%;
+  height: auto;
+}
+
+.features div p {
+  text-align: center;
   font-size: 1rem;
-  text-transform: uppercase;
-  height: 30px;
-  line-height: 30px;
-  margin-bottom: .75rem;
-  font-weight: 600;
-  letter-spacing: .1rem; }
+  line-height: 1.5;
+}
+
+.acknowledgements {
+  margin-top: 3rem;
+}
+
+.acknowledgements h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.acknowledgements p {
+  text-align: center;
+  width: 60%;
+  margin: 1.5rem auto;
+}
+
+/*# sourceMappingURL=index.css.map */
