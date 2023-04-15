@@ -72,7 +72,12 @@ function saveFile() {
 function switchFile() {
 }
 
+ace.require("ace/ext/language_tools");
 let editor = ace.edit("editor");
+editor.setOptions({
+    enableBasicAutocompletion: true,
+    enableLiveAutocompletion: true
+});
 editor.setShowPrintMargin(false);
 editor.setTheme("ace/theme/one_dark");
 editor.setOption ("wrap", true);

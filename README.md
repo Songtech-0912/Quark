@@ -20,6 +20,7 @@ Here's what Quark offers:
 * Minimal memory use
 * File autosaving
 * Syntax highlighting of most languages
+* Basic autocomplete
 * Classic One Dark theme
 * Minimalist and distraction-free feature set
 
