@@ -16,8 +16,8 @@ Quark is a hackable, minimalist code editor. Unlike electron-based editors, it d
 
 Here's what Quark offers:
 
-* Fast file opening speeds, even on very large files (More testing needed to verify this!)
-* Minimal memory use
+* Fast file opening speeds, even on very large files - tested on code files with 10K lines of code with no issue
+* Minimal memory use (~15 MB for most code files, only ~60 MB even for code files up to 10K lines of code)
 * File autosaving
 * Syntax highlighting of most languages
 * Basic autocomplete
