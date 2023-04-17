@@ -141,28 +141,32 @@ body {
 /* Opened files list */
 
 .editor-sidebar details {
-  padding: 0.8rem 0.6rem;
-  margin: 0.5rem 0;
-  color: #aaa;
-	font-size: 0.75rem;
-  font-family: Inter;
+    padding: 0.8rem 0.6rem;
+    margin: 0.5rem 0;
+    color: #aaa;
+    font-size: 0.75rem;
+    font-family: Inter;
 }
 
-.buttons {
+.editor-sidebar details p {
 	text-align: left;
-  cursor: pointer;
-  color: inherit;
-  background: none;
-  border: none;
-  font-family: inherit;
-  padding: 0.4rem 1rem;
+    cursor: pointer;
+    color: inherit;
+    background: none;
+    border: none;
+    font-family: inherit;
+    padding: 0.4rem 1rem;
 }
 
-.buttons:hover {
-  transition: all 0.1s ease-out;
-  background: #193349;
+.editor-sidebar details p:hover {
+    transition: all 0.1s ease-out;
+    background: #193349;
 }
 
+.editor-sidebar details .active {
+    background: #282C34;
+	margin-top: 1rem;
+}
 
 /* For toast notifications */
 
