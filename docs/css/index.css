@@ -6,6 +6,10 @@ body {
   font-family: "Inter", Sans-Serif;
 }
 
+a {
+  color: #0EA5E9;
+}
+
 .container {
   display: flex;
   flex-direction: column;

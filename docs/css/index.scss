@@ -3,6 +3,7 @@
 $bg-color: #1A1C20;
 $primary-color: #282C34;
 $text-color: #fffffa;
+$link-color: #0EA5E9;
 
 body {
     color: $text-color;
@@ -10,6 +11,10 @@ body {
     flex-direction: column;
     background-color: $bg-color;
     font-family: "Inter", Sans-Serif;
+}
+
+a {
+    color: $link-color;
 }
 
 .container {
@@ -79,7 +84,7 @@ body {
     display: flex;
     justify-content: space-evenly;
     @include md { flex-direction: column; };
-}    
+}
 
 .features div {
     width: 25%;
