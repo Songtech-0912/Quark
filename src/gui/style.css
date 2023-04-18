@@ -140,7 +140,7 @@ body {
 
 /* Opened files list */
 
-.editor-sidebar details {
+.editor-sidebar-files {
     padding: 0.8rem 0.6rem;
     margin: 0.5rem 0;
     color: #aaa;
@@ -148,24 +148,28 @@ body {
     font-family: Inter;
 }
 
-.editor-sidebar details p {
-	text-align: left;
+.editor-sidebar-files p {
+	  text-align: left;
     cursor: pointer;
     color: inherit;
     background: none;
     border: none;
     font-family: inherit;
     padding: 0.4rem 1rem;
+    border-radius: 0.25rem;
 }
 
-.editor-sidebar details p:hover {
+.editor-sidebar-files p:hover {
     transition: all 0.1s ease-out;
-    background: #193349;
+    background: #2a2f37;
 }
 
-.editor-sidebar details .active {
-    background: #282C34;
-	margin-top: 1rem;
+.editor-sidebar-files .active {
+    background: #353a44;
+}
+
+.editor-sidebar-files div {
+    margin-top: 1rem;
 }
 
 /* For toast notifications */
@@ -200,21 +204,6 @@ body {
 #toast.error {
   color: #fcc;
   background: #511;
-}
-
-.bootstrap-icon {
-    margin: auto;
-    padding: 0.7rem;
-}
-
-.bootstrap-icon-svg {
-    fill: #50646d;
-}
-
-.bootstrap-icon-svg:hover {
-    fill: #aaa;
-    width: 1.7rem;
-    height: 1.7rem;
 }
 
 .icon {
