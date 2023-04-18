@@ -2,15 +2,39 @@ import webview
 import sys
 from pathlib import Path
 
+languages_map = {
+    "": "plain_text",
+    ".js": "javascript",
+    ".py": "python",
+    ".html": "html",
+    ".css": "css",
+    ".rs": "rust",
+    ".md": "markdown",
+    ".c": "c",
+    ".cpp": "cpp",
+    ".txt": "plain_text",
+    ".java": "java",
+    ".yml": "yaml",
+    ".json": "json",
+    ".lua": "lua"
+}
+
 class Api():
   def open_file(self):
     result = webview.windows[0].create_file_dialog(webview.OPEN_DIALOG)
     if result == "":
       raise Exception("Choosing file was unsuccessful")
+    # filepath
     file = result[0]
+    # file contents as string
     contents = Path(file).open().read()
+    # filename with extension
+    filename = result[0].split("/")[-1]
+    # language
+    extension = Path(file).suffix
+    language = languages_map[extension]
     response = {
-      "file": [file, contents]
+      "file": [file, contents, filename, language]
     }
     return response
 
