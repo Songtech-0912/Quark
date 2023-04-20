@@ -28,7 +28,7 @@ languages_map = {
     ".f90": "fortran",
     ".glsl": "glsl",
     ".julia": "julia",
-    ".latex": "latex"
+    ".latex": "latex",
     ".m": "matlab"
 }
 
