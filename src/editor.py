@@ -8,15 +8,28 @@ languages_map = {
     ".py": "python",
     ".html": "html",
     ".css": "css",
+    ".scss": "sass",
+    ".svg": "svg",
+    ".less": "less",
     ".rs": "rust",
+    ".ruby": "ruby",
     ".md": "markdown",
+    ".xml": "xml",
     ".c": "c",
     ".cpp": "cpp",
     ".txt": "plain_text",
     ".java": "java",
     ".yml": "yaml",
     ".json": "json",
-    ".lua": "lua"
+    ".lua": "lua",
+    ".adoc": "asciidoc",
+    ".cs": "csharp",
+    ".dart": "dart",
+    ".f90": "fortran",
+    ".glsl": "glsl",
+    ".julia": "julia",
+    ".latex": "latex"
+    ".m": "matlab"
 }
 
 class Api():
@@ -32,7 +45,10 @@ class Api():
     filename = result[0].split("/")[-1]
     # language
     extension = Path(file).suffix
-    language = languages_map[extension]
+    try:
+        language = languages_map[extension]
+    except KeyError:
+        language = "plain_text"
     response = {
       "file": [file, contents, filename, language]
     }
