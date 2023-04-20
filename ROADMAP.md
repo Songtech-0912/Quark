@@ -4,15 +4,15 @@
 
 - [x] Code in new design
 - [ ] Resizable frameless window (based on `window.resize()` and https://spin.atomicobject.com/2019/11/21/creating-a-resizable-html-element/)
-- [ ] Rework file opening and saving for multiple file support
+- [x] Rework file opening and saving for multiple file support
 - [ ] Create new file support
 - [x] Reimplement autosaving on edit
 - [ ] Keyboard shortcuts
     - [ ] Use the shortcut `Ctrl Tab` to switch currently opened file
-- [ ] Auto-detect language and syntax highlighting
+- [x] Auto-detect language and syntax highlighting
 - [ ] Open last session support
 - [ ] Rename file support
-- [ ] Redesign website in Figma and make it
+- [x] Redesign website in Figma and make it
 - [ ] Adjustable-size sidebar
 - [x] Command bar
 
