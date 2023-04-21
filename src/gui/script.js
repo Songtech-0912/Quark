@@ -158,13 +158,13 @@ function newFile() {
 }
 
 function sidebarBtnTemplate() {
-    sidebarBtns = "";
-    for (let file of buffers.files) {
-        btn_class = file.path === buffers.current ? "active" : "";
-        file_btn = `<p class="${btn_class}" data-path="${file.path}">${file.filename}</p>\n`;
-        sidebarBtns += file_btn;
-    }
-    return `<div>${sidebarBtns}</div>`;
+    return `
+        <div>
+            ${buffers.files.map(function(file) {
+                let btn_class = file.path === buffers.current ? "active" : "";
+                return `<p class="${btn_class}" data-path="${file.path}">${file.filename}</p>`;
+            }).join('')}
+        </div>`;
 }
 
 function handleSave() {
