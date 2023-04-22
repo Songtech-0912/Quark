@@ -57,6 +57,10 @@ body {
     height: 100%;
 }
 
+nav {
+    padding: 0 0.2rem;
+}
+
 /* Dropdown items */
 .dropdown-button {
     display: block;
