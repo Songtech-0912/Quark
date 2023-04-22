@@ -67,10 +67,18 @@ class Api():
     if result == "":
       raise Exception("Saving new file was unsuccessful")
     file = "".join(result)
+    print(file)
+    contents = Path(file).open().read()
+    filename = file.split("/")[-1]
+    extension = Path(file).suffix
+    try:
+        language = languages_map[extension]
+    except KeyError:
+        language = "plain_text"
     fp = open(file, "w")
     fp.close()
     response = {
-      "file": file
+      "file": [file, contents, filename, language]
     }
     return response
 

@@ -212,11 +212,23 @@ function handleSave() {
     pywebview.api.save_new_file().then(function(response) {
       let file = response.file;
       let filebuffer = {};
-      filebuffer.path = file;
-      filebuffer.contents = editor.getValue();
-      buffers.addFile(filebuffer);
-      buffers.setCurrentFile(file);
+      filebuffer.path = file[0];
+      filebuffer.contents = file[1];
+      filebuffer.filename = file[2];
+      filebuffer.language = file[3];
+      filebuffer.id = buffers.currentID;
+      console.log(filebuffer);
+      // Update buffers with the new path, filename, and
+      // language of the saved file
+      let current_file = buffers.getFileFromId(buffers.currentID);
+      current_file.path = filebuffer.path;
+      current_file.contents = filebuffer.contents;
+      current_file.filename = filebuffer.filename;
+      current_file.language = filebuffer.language;
+      // Update current buffer and set to autosave
+      buffers.current = filebuffer.path;
       buffers.setSaved();
+      openedFilesPanel.innerHTML = sidebarBtnTemplate();
     });
     // Create save dialog
   } else {
