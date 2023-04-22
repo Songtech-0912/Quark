@@ -10,7 +10,7 @@ body {
   flex-direction: column;
   height: 100vh;
 	background-color: #21242B;
-	font-size: 0.75rem;
+	font-size: 0.7rem;
   color: #aaa;
 }
 
@@ -63,7 +63,7 @@ body {
     font-family: Inter;
     background-color: #282C34;
     margin: 0.3rem auto;
-    padding: 0.25rem 0.5rem ;
+    padding: 0.15rem 0.4rem;
     border: none;
     cursor: pointer;
 }
@@ -77,7 +77,7 @@ body {
   display: none;
   position: absolute;
   background-color: #282C34;
-  margin-left: 0.6rem;
+  margin-left: 0.3rem;
   min-width: 8rem;
   box-shadow: 0 0.5rem 1rem 0 rgba(0,0,0,0.2);
   z-index: 1;
