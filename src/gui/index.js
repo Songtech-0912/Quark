@@ -1,7 +1,8 @@
 class FileBuffer {
-    constructor(files = [], current = "", is_saved = false) {
+    constructor(files = [], current = "", currentID = "", is_saved = false) {
         this.files = files;
         this.current = current;
+        this.currentID = currentID;
         this.is_saved = is_saved;
     }
 
@@ -33,9 +34,31 @@ class FileBuffer {
         }
     }
 
+    getFileFromId(id) {
+        for (let file of this.files) {
+            if (file.id === id) {
+                return file;
+            }
+        }
+    }
+
     setSaved() {
         this.is_saved = true;
     }
+}
+
+let openedFilesPanel = document.querySelector(".editor-sidebar details");
+let buffers = new FileBuffer();
+const menubar = document.querySelector("#menubar");
+
+function randHex(size) {
+  let result = [];
+  let hexRef = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+
+  for (let n = 0; n < size; n++) {
+    result.push(hexRef[Math.floor(Math.random() * 16)]);
+  }
+  return result.join('');
 }
 
 // For toast notifications
@@ -99,6 +122,7 @@ function openFile() {
     filebuffer.contents = file[1];
     filebuffer.filename = file[2];
     filebuffer.language = file[3];
+    filebuffer.id = randHex(6);
     // Only add file to filebuffer if it doesn't already exist in filebuffer
     if (buffers.getFiles().includes(filebuffer.path) !== true) {
         buffers.addFile(filebuffer);
@@ -111,11 +135,15 @@ function openFile() {
   });
 }
 
+function updateBuffers() {
+  buffers.getFileFromId(buffers.currentID).contents = editor.getValue();
+}
+
 function saveFile() {
   let file_path = buffers.current;
   pywebview.api.save_file(file_path, editor.getValue());
   // update internal buffers as well
-  buffers.getFileFromPath(buffers.current).contents = editor.getValue();
+  updateBuffers();
 }
 
 function switchFile(filebuffer) {
@@ -127,7 +155,16 @@ function switchFile(filebuffer) {
 }
 
 function newFile() {
-  log("Not implemented yet");
+  let filebuffer = {};
+  filebuffer.path = "";
+  filebuffer.contents = "";
+  filebuffer.filename = "Untitled";
+  filebuffer.language = "plain_text";
+  filebuffer.id = randHex(6);
+  buffers.addFile(filebuffer);
+  switchFile(filebuffer);
+  buffers.is_saved = false;
+  buffers.currentID = filebuffer.id;
 }
 
 function createMenuContents(menu) {
@@ -200,16 +237,9 @@ editor.setOptions({
 editor.setShowPrintMargin(false);
 editor.setTheme("ace/theme/one_dark");
 editor.setOption ("wrap", true);
-// currently default syntax highlight is python
-editor.session.setMode("ace/mode/python");
-editor.container.style.lineHeight = 1.5;
+// Start with default empty file
+newFile();
 
-let openedFilesPanel = document.querySelector(".editor-sidebar details");
-
-let buffers = new FileBuffer();
-
-const menubar = document.querySelector("#menubar");
-const lineNumbers = document.querySelector('.line-numbers');
 
 let menus = {
   "File": {},
@@ -288,10 +318,10 @@ closeIcon = document.querySelector("#window-close")
 closeIcon.addEventListener("click", quit);
 
 function saveHandler() {
-  if (!buffers.is_saved) {
-    handleSave()
-  } else {
+  if (buffers.is_saved) {
     saveFile()
+  } else {
+    updateBuffers()
   }
 }
 
