@@ -126,35 +126,38 @@ function switchFile(filebuffer) {
     openedFilesPanel.innerHTML = sidebarBtnTemplate();
 }
 
-function createMenubarElement(name) {
-  let menubarElement = document.createElement("div");
-  menubarElement.classList.add("dropdown");
-  menubarElement.innerHTML = `
-    <div class="dropdown-button hvr-radial-out">
-      <p>${name}</p>
-    </div>
-  `;
-  let menuContents = createMenuContents(name);
-  menubarElement.appendChild(menuContents);
-  return menubarElement;
-}
-
-function createMenuContents(name) {
-  let menuContents = document.createElement("div");
-  menuContents.classList.add("dropdown-content");
-  let submenus = Object.keys(menus[name]);
-  for (let submenu of submenus) {
-    let description = menus[name][submenu];
-    let label = document.createElement("p");
-    label.innerText = description;
-    label.dataset.menuId = submenu;
-    menuContents.appendChild(label);
-  }
-  return menuContents;
-}
-
 function newFile() {
   log("Not implemented yet");
+}
+
+function createMenuContents(menu) {
+  let submenus = Object.keys(menus[menu]);
+  return `
+    <div class="dropdown-content">
+      ${submenus.map(function(submenu) {
+        return `<p data-menu-id="${submenu}">${menus[menu][submenu]}</p>`
+      }).join("")}
+    </div>
+  `;
+}
+
+
+function menubarTemplate(menus) {
+    let menus_list = Object.keys(menus);
+    return `
+      ${menus_list.map(function(menu_item) {
+        return `
+          <div class="dropdown">
+            <div class="dropdown-button hvr-radial-out">
+              <p>${menu_item}</p>
+            </div>
+            <div class="dropdown-content">
+              ${createMenuContents(menu_item)}
+            </div>
+          </div>
+        `;
+      }).join("")}
+    `;
 }
 
 function sidebarBtnTemplate() {
@@ -232,13 +235,7 @@ addMenuElement("Edit", "cut", "Cut");
 addMenuElement("Edit", "copy", "Copy");
 addMenuElement("Edit", "paste", "Paste");
 
-let menus_list = Object.keys(menus);
-
-for (let menuItem of menus_list) {
-  let menuElement = createMenubarElement(menuItem);
-  let menuContents = document.createElement("div");
-  menubar.appendChild(menuElement);
-}
+menubar.innerHTML = menubarTemplate(menus);
 
 // Event delegation for left sidebar
 openedFilesPanel.addEventListener("click", function(event) {
