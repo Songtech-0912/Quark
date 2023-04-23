@@ -147,10 +147,13 @@ function saveFile() {
 }
 
 function switchFile(filebuffer) {
-    buffers.setCurrentFile(filebuffer.path);
+    buffers.current = filebuffer.path;
+    buffers.currentID = filebuffer.id;
     editor.session.setMode("ace/mode/" + filebuffer.language);
     editor.getSession().setValue(filebuffer.contents);
-    buffers.setSaved();
+    if (filebuffer.filename !== "Untitled") {
+        buffers.setSaved()
+    }
     openedFilesPanel.innerHTML = sidebarBtnTemplate();
 }
 
@@ -202,7 +205,7 @@ function sidebarBtnTemplate() {
         <div>
             ${buffers.files.map(function(file) {
                 let btn_class = file.path === buffers.current ? "active" : "";
-                return `<p class="${btn_class}" data-path="${file.path}">${file.filename}</p>`;
+                return `<p class="${btn_class}" data-id="${file.id}" data-path="${file.path}">${file.filename}</p>`;
             }).join('')}
         </div>`;
 }
@@ -217,7 +220,6 @@ function handleSave() {
       filebuffer.filename = file[2];
       filebuffer.language = file[3];
       filebuffer.id = buffers.currentID;
-      console.log(filebuffer);
       // Update buffers with the new path, filename, and
       // language of the saved file
       let current_file = buffers.getFileFromId(buffers.currentID);
@@ -282,10 +284,14 @@ menubar.innerHTML = menubarTemplate(menus);
 // Event delegation for left sidebar
 openedFilesPanel.addEventListener("click", function(event) {
     let target = event.target;
-    if (target.dataset.path) {
-        let path = target.dataset.path;
-        console.log(`Editor switching to ${path}`);
-        let file = buffers.getFileFromPath(path);
+    if (target.dataset.id) {
+        // let path = target.dataset.path;
+        // console.log(`Editor switching to ${path}`);
+        // let file = buffers.getFileFromPath(path);
+        // switchFile(file);
+        let id = target.dataset.id;
+        console.log(`Editor switching to file with id ${id}`);
+        let file = buffers.getFileFromId(id);
         switchFile(file);
     }
 })
