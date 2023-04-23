@@ -140,7 +140,8 @@ function updateBuffers() {
 }
 
 function saveFile() {
-  let file_path = buffers.current;
+  let file = buffers.getFileFromId(buffers.currentId);
+  let file_path = file.path;
   pywebview.api.save_file(file_path, editor.getValue());
   // update internal buffers as well
   updateBuffers();
@@ -284,12 +285,8 @@ menubar.innerHTML = menubarTemplate(menus);
 // Event delegation for left sidebar
 openedFilesPanel.addEventListener("click", function(event) {
     let target = event.target;
-    if (target.dataset.id) {
-        // let path = target.dataset.path;
-        // console.log(`Editor switching to ${path}`);
-        // let file = buffers.getFileFromPath(path);
-        // switchFile(file);
-        let id = target.dataset.id;
+    let id = target.dataset.id;
+    if (id) {
         console.log(`Editor switching to file with id ${id}`);
         let file = buffers.getFileFromId(id);
         switchFile(file);
