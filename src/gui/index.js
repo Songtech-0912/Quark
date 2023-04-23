@@ -1,21 +1,29 @@
 class FileBuffer {
-    constructor(files = [], current = "", currentID = "", is_saved = false) {
+    constructor(files = [], current = "", currentID = "", lastID = "", is_saved = false) {
         this.files = files;
         this.current = current;
         this.currentID = currentID;
+        this.lastID = lastID;
         this.is_saved = is_saved;
     }
 
     addFile(filebuffer) {
         this.files.push(filebuffer);
     }
-
-    setCurrentFile(path) {
-        this.current = path;
+    
+    removeFile(filebuffer) {
+        let index = this.files.indexOf(filebuffer)
+        if (index > -1) {
+            this.files.splice(index, 1);
+        }
     }
-
+    
     getCurrentFile() {
-        return this.current;
+        return this.getFileFromId(this.currentID);
+    }
+    
+    getLastFile() {
+        return this.getFileFromId(this.lastID);
     }
 
     getFiles() {
@@ -24,14 +32,6 @@ class FileBuffer {
             files.push(file.path);
         }
         return files;
-    }
-
-    getFileFromPath(path) {
-        for (let file of this.files) {
-            if (file.path === path) {
-                return file;
-            }
-        }
     }
 
     getFileFromId(id) {
@@ -127,7 +127,8 @@ function openFile() {
     if (buffers.getFiles().includes(filebuffer.path) !== true) {
         buffers.addFile(filebuffer);
     }
-    buffers.setCurrentFile(filebuffer.path);
+    buffers.current = filebuffer.path;
+    buffers.currentID = filebuffer.id;
     editor.session.setMode("ace/mode/" + filebuffer.language);
     editor.getSession().setValue(filebuffer.contents);
     buffers.setSaved();
@@ -136,11 +137,11 @@ function openFile() {
 }
 
 function updateBuffers() {
-  buffers.getFileFromId(buffers.currentID).contents = editor.getValue();
+  buffers.getCurrentFile().contents = editor.getValue();
 }
 
 function saveFile() {
-  let file = buffers.getFileFromId(buffers.currentId);
+  let file = buffers.getCurrentFile();
   let file_path = file.path;
   pywebview.api.save_file(file_path, editor.getValue());
   // update internal buffers as well
@@ -148,6 +149,7 @@ function saveFile() {
 }
 
 function switchFile(filebuffer) {
+    buffers.lastID = buffers.currentID;
     buffers.current = filebuffer.path;
     buffers.currentID = filebuffer.id;
     editor.session.setMode("ace/mode/" + filebuffer.language);
@@ -205,7 +207,7 @@ function sidebarBtnTemplate() {
     return `
         <div>
             ${buffers.files.map(function(file) {
-                let btn_class = file.path === buffers.current ? "active" : "";
+                let btn_class = file.id === buffers.currentID ? "active" : "";
                 return `<p class="${btn_class}" data-id="${file.id}" data-path="${file.path}">${file.filename}</p>`;
             }).join('')}
         </div>`;
@@ -223,7 +225,7 @@ function handleSave() {
       filebuffer.id = buffers.currentID;
       // Update buffers with the new path, filename, and
       // language of the saved file
-      let current_file = buffers.getFileFromId(buffers.currentID);
+      let current_file = buffers.getCurrentFile();
       current_file.path = filebuffer.path;
       current_file.contents = filebuffer.contents;
       current_file.filename = filebuffer.filename;
@@ -239,6 +241,22 @@ function handleSave() {
   }
 }
 
+function closeEditor() {
+    let current_file = buffers.getCurrentFile();
+    let last_file = buffers.getLastFile();
+    
+    // Quit if the file is the only file in the buffer
+    if (buffers.files.length === 1) {
+        quit()
+    } else {
+        switchFile(last_file)
+    }
+    
+    // Remove file from buffer
+    buffers.removeFile(current_file);
+    openedFilesPanel.innerHTML = sidebarBtnTemplate();
+}
+
 function setMode(mode) {
     editor.session.setMode("ace/mode/" + mode);
 }
@@ -252,6 +270,7 @@ editor.setOptions({
 editor.setShowPrintMargin(false);
 editor.setTheme("ace/theme/one_dark");
 editor.setOption ("wrap", true);
+editor.container.style.lineHeight = 1.5
 // Start with default empty file
 newFile();
 
