@@ -1,20 +1,28 @@
 class FileBuffer {
-    constructor(files = [], current = "", is_saved = false) {
+    constructor(files = [], current = "", currentID = "", lastID = "") {
         this.files = files;
         this.current = current;
-        this.is_saved = is_saved;
+        this.currentID = currentID;
+        this.lastID = lastID;
     }
 
     addFile(filebuffer) {
         this.files.push(filebuffer);
     }
-
-    setCurrentFile(path) {
-        this.current = path;
+    
+    removeFile(filebuffer) {
+        let index = this.files.indexOf(filebuffer)
+        if (index > -1) {
+            this.files.splice(index, 1);
+        }
     }
-
+    
     getCurrentFile() {
-        return this.current;
+        return this.getFileFromId(this.currentID);
+    }
+    
+    getLastFile() {
+        return this.getFileFromId(this.lastID);
     }
 
     getFiles() {
@@ -25,17 +33,27 @@ class FileBuffer {
         return files;
     }
 
-    getFileFromPath(path) {
+    getFileFromId(id) {
         for (let file of this.files) {
-            if (file.path === path) {
+            if (file.id === id) {
                 return file;
             }
         }
     }
+}
 
-    setSaved() {
-        this.is_saved = true;
-    }
+let openedFilesPanel = document.querySelector(".editor-sidebar details");
+let buffers = new FileBuffer();
+const menubar = document.querySelector("#menubar");
+
+function randHex(size) {
+  let result = [];
+  let hexRef = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+
+  for (let n = 0; n < size; n++) {
+    result.push(hexRef[Math.floor(Math.random() * 16)]);
+  }
+  return result.join('');
 }
 
 // For toast notifications
@@ -99,35 +117,50 @@ function openFile() {
     filebuffer.contents = file[1];
     filebuffer.filename = file[2];
     filebuffer.language = file[3];
+    filebuffer.id = randHex(6);
+    filebuffer.is_saved = true;
     // Only add file to filebuffer if it doesn't already exist in filebuffer
     if (buffers.getFiles().includes(filebuffer.path) !== true) {
         buffers.addFile(filebuffer);
     }
-    buffers.setCurrentFile(filebuffer.path);
+    buffers.currentID = filebuffer.id;
     editor.session.setMode("ace/mode/" + filebuffer.language);
     editor.getSession().setValue(filebuffer.contents);
-    buffers.setSaved();
     openedFilesPanel.innerHTML = sidebarBtnTemplate();
   });
 }
 
+function updateBuffers() {
+  buffers.getCurrentFile().contents = editor.getValue();
+}
+
 function saveFile() {
-  let file_path = buffers.current;
+  let file = buffers.getCurrentFile();
+  let file_path = file.path;
   pywebview.api.save_file(file_path, editor.getValue());
   // update internal buffers as well
-  buffers.getFileFromPath(buffers.current).contents = editor.getValue();
+  updateBuffers();
 }
 
 function switchFile(filebuffer) {
-    buffers.setCurrentFile(filebuffer.path);
+    buffers.lastID = buffers.currentID;
+    buffers.currentID = filebuffer.id;
     editor.session.setMode("ace/mode/" + filebuffer.language);
     editor.getSession().setValue(filebuffer.contents);
-    buffers.setSaved();
     openedFilesPanel.innerHTML = sidebarBtnTemplate();
 }
 
 function newFile() {
-  log("Not implemented yet");
+  let filebuffer = {};
+  filebuffer.path = "";
+  filebuffer.contents = "";
+  filebuffer.filename = "Untitled";
+  filebuffer.language = "plain_text";
+  filebuffer.id = randHex(6);
+  buffers.addFile(filebuffer);
+  switchFile(filebuffer);
+  buffers.is_saved = false;
+  buffers.currentID = filebuffer.id;
 }
 
 function createMenuContents(menu) {
@@ -164,8 +197,8 @@ function sidebarBtnTemplate() {
     return `
         <div>
             ${buffers.files.map(function(file) {
-                let btn_class = file.path === buffers.current ? "active" : "";
-                return `<p class="${btn_class}" data-path="${file.path}">${file.filename}</p>`;
+                let btn_class = file.id === buffers.currentID ? "active" : "";
+                return `<p class="${btn_class}" data-id="${file.id}" data-path="${file.path}">${file.filename}</p>`;
             }).join('')}
         </div>`;
 }
@@ -175,16 +208,45 @@ function handleSave() {
     pywebview.api.save_new_file().then(function(response) {
       let file = response.file;
       let filebuffer = {};
-      filebuffer.path = file;
+      filebuffer.path = file[0];
       filebuffer.contents = editor.getValue();
-      buffers.addFile(filebuffer);
-      buffers.setCurrentFile(file);
-      buffers.setSaved();
+      filebuffer.filename = file[1];
+      filebuffer.language = file[2];
+      filebuffer.id = buffers.currentID;
+      filebuffer.is_saved = true;
+      // Update buffers with the new path, filename, and
+      // language of the saved file
+      let current_file = buffers.getCurrentFile();
+      current_file.path = filebuffer.path;
+      current_file.contents = filebuffer.contents;
+      current_file.filename = filebuffer.filename;
+      current_file.language = filebuffer.language;
+      current_file.is_saved = filebuffer.is_saved;
+      // Update sidebar buttons
+      openedFilesPanel.innerHTML = sidebarBtnTemplate();
     });
     // Create save dialog
   } else {
     log("Quark auto-saves your work :)");
   }
+}
+
+function closeEditor() {
+    // TODO: probably should warn the user before
+    // closing an unsaved file
+    let current_file = buffers.getCurrentFile();
+    let last_file = buffers.getLastFile();
+    
+    // Quit if the file is the only file in the buffer
+    if (buffers.files.length === 1) {
+        quit()
+    } else {
+        switchFile(last_file)
+    }
+    
+    // Remove file from buffer
+    buffers.removeFile(current_file);
+    openedFilesPanel.innerHTML = sidebarBtnTemplate();
 }
 
 function setMode(mode) {
@@ -200,16 +262,10 @@ editor.setOptions({
 editor.setShowPrintMargin(false);
 editor.setTheme("ace/theme/one_dark");
 editor.setOption ("wrap", true);
-// currently default syntax highlight is python
-editor.session.setMode("ace/mode/python");
-editor.container.style.lineHeight = 1.5;
+editor.container.style.lineHeight = 1.5
+// Start with default empty file
+newFile();
 
-let openedFilesPanel = document.querySelector(".editor-sidebar details");
-
-let buffers = new FileBuffer();
-
-const menubar = document.querySelector("#menubar");
-const lineNumbers = document.querySelector('.line-numbers');
 
 let menus = {
   "File": {},
@@ -240,10 +296,10 @@ menubar.innerHTML = menubarTemplate(menus);
 // Event delegation for left sidebar
 openedFilesPanel.addEventListener("click", function(event) {
     let target = event.target;
-    if (target.dataset.path) {
-        let path = target.dataset.path;
-        console.log(`Editor switching to ${path}`);
-        let file = buffers.getFileFromPath(path);
+    let id = target.dataset.id;
+    if (id) {
+        console.log(`Editor switching to file with id ${id}`);
+        let file = buffers.getFileFromId(id);
         switchFile(file);
     }
 })
@@ -288,10 +344,11 @@ closeIcon = document.querySelector("#window-close")
 closeIcon.addEventListener("click", quit);
 
 function saveHandler() {
-  if (!buffers.is_saved) {
-    handleSave()
-  } else {
+  // Only autosave saved files
+  if (buffers.getCurrentFile().is_saved) {
     saveFile()
+  } else {
+    updateBuffers()
   }
 }
 

@@ -32,6 +32,10 @@ languages_map = {
     ".m": "matlab"
 }
 
+def create_file(path):
+    with open(path, "w") as f:
+        f.write("")
+
 class Api():
   def open_file(self):
     result = webview.windows[0].create_file_dialog(webview.OPEN_DIALOG)
@@ -67,10 +71,20 @@ class Api():
     if result == "":
       raise Exception("Saving new file was unsuccessful")
     file = "".join(result)
+    # If file doesn't exist create it
+    if not Path(file).is_file():
+        create_file(file)
+    print(file)
+    filename = file.split("/")[-1]
+    extension = Path(file).suffix
+    try:
+        language = languages_map[extension]
+    except KeyError:
+        language = "plain_text"
     fp = open(file, "w")
     fp.close()
     response = {
-      "file": file
+      "file": [file, filename, language]
     }
     return response
 
