@@ -75,7 +75,6 @@ class Api():
     if not Path(file).is_file():
         create_file(file)
     print(file)
-    contents = Path(file).open().read()
     filename = file.split("/")[-1]
     extension = Path(file).suffix
     try:
@@ -85,7 +84,7 @@ class Api():
     fp = open(file, "w")
     fp.close()
     response = {
-      "file": [file, contents, filename, language]
+      "file": [file, filename, language]
     }
     return response
 

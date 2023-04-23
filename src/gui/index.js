@@ -1,10 +1,9 @@
 class FileBuffer {
-    constructor(files = [], current = "", currentID = "", lastID = "", is_saved = false) {
+    constructor(files = [], current = "", currentID = "", lastID = "") {
         this.files = files;
         this.current = current;
         this.currentID = currentID;
         this.lastID = lastID;
-        this.is_saved = is_saved;
     }
 
     addFile(filebuffer) {
@@ -40,10 +39,6 @@ class FileBuffer {
                 return file;
             }
         }
-    }
-
-    setSaved() {
-        this.is_saved = true;
     }
 }
 
@@ -123,15 +118,14 @@ function openFile() {
     filebuffer.filename = file[2];
     filebuffer.language = file[3];
     filebuffer.id = randHex(6);
+    filebuffer.is_saved = true;
     // Only add file to filebuffer if it doesn't already exist in filebuffer
     if (buffers.getFiles().includes(filebuffer.path) !== true) {
         buffers.addFile(filebuffer);
     }
-    buffers.current = filebuffer.path;
     buffers.currentID = filebuffer.id;
     editor.session.setMode("ace/mode/" + filebuffer.language);
     editor.getSession().setValue(filebuffer.contents);
-    buffers.setSaved();
     openedFilesPanel.innerHTML = sidebarBtnTemplate();
   });
 }
@@ -150,13 +144,9 @@ function saveFile() {
 
 function switchFile(filebuffer) {
     buffers.lastID = buffers.currentID;
-    buffers.current = filebuffer.path;
     buffers.currentID = filebuffer.id;
     editor.session.setMode("ace/mode/" + filebuffer.language);
     editor.getSession().setValue(filebuffer.contents);
-    if (filebuffer.filename !== "Untitled") {
-        buffers.setSaved()
-    }
     openedFilesPanel.innerHTML = sidebarBtnTemplate();
 }
 
@@ -219,10 +209,11 @@ function handleSave() {
       let file = response.file;
       let filebuffer = {};
       filebuffer.path = file[0];
-      filebuffer.contents = file[1];
-      filebuffer.filename = file[2];
-      filebuffer.language = file[3];
+      filebuffer.contents = editor.getValue();
+      filebuffer.filename = file[1];
+      filebuffer.language = file[2];
       filebuffer.id = buffers.currentID;
+      filebuffer.is_saved = true;
       // Update buffers with the new path, filename, and
       // language of the saved file
       let current_file = buffers.getCurrentFile();
@@ -230,9 +221,8 @@ function handleSave() {
       current_file.contents = filebuffer.contents;
       current_file.filename = filebuffer.filename;
       current_file.language = filebuffer.language;
-      // Update current buffer and set to autosave
-      buffers.current = filebuffer.path;
-      buffers.setSaved();
+      current_file.is_saved = filebuffer.is_saved;
+      // Update sidebar buttons
       openedFilesPanel.innerHTML = sidebarBtnTemplate();
     });
     // Create save dialog
@@ -242,6 +232,8 @@ function handleSave() {
 }
 
 function closeEditor() {
+    // TODO: probably should warn the user before
+    // closing an unsaved file
     let current_file = buffers.getCurrentFile();
     let last_file = buffers.getLastFile();
     
@@ -352,7 +344,8 @@ closeIcon = document.querySelector("#window-close")
 closeIcon.addEventListener("click", quit);
 
 function saveHandler() {
-  if (buffers.is_saved) {
+  // Only autosave saved files
+  if (buffers.getCurrentFile().is_saved) {
     saveFile()
   } else {
     updateBuffers()
