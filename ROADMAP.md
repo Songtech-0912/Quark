@@ -5,7 +5,7 @@
 - [x] Code in new design
 - [ ] Resizable frameless window (based on `window.resize()` and https://spin.atomicobject.com/2019/11/21/creating-a-resizable-html-element/)
 - [x] Rework file opening and saving for multiple file support
-- [ ] Create new file support
+- [x] Create new file support
 - [ ] Proper clipboard support for menubar copy and paste
 - [x] Reimplement autosaving on edit
 - [ ] Keyboard shortcuts
