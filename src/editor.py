@@ -29,7 +29,8 @@ languages_map = {
     ".glsl": "glsl",
     ".julia": "julia",
     ".latex": "latex",
-    ".m": "matlab"
+    ".m": "matlab",
+    ".sh": "sh"
 }
 
 def create_file(path):
@@ -37,6 +38,15 @@ def create_file(path):
         f.write("")
 
 class Api():
+  def __init__(self, file):
+    self.startup_file = file
+
+  def get_startup_file(self):
+    response = {
+      "file": str(self.startup_file)
+    }
+    return response
+
   def open_file(self):
     result = webview.windows[0].create_file_dialog(webview.OPEN_DIALOG)
     if result == "":
@@ -55,6 +65,19 @@ class Api():
         language = "plain_text"
     response = {
       "file": [file, contents, filename, language]
+    }
+    return response
+
+  def open_file_path(self, path):
+    contents = Path(path).open().read()
+    filename = path.split("/")[-1]
+    extension = Path(path).suffix
+    try:
+        language = languages_map[extension]
+    except KeyError:
+        language = "plain_text"
+    response = {
+      "file": [path, contents, filename, language]
     }
     return response
 
@@ -88,7 +111,15 @@ class Api():
     }
     return response
 
-def main(debug=False):
-  api = Api()
+def startup(window):
+    window.evaluate_js("startup()")
+
+def main(args):
+  debug = args.debug
+  if args.file:
+    file = Path(args.file).absolute()
+  else:
+    file = None
+  api = Api(file)
   window = webview.create_window("Quark", "gui/index.html", width=1080, height=760, js_api=api, frameless=True, resizable=True, easy_drag=False)
-  webview.start(debug=debug)
+  webview.start(startup, window, debug=debug)

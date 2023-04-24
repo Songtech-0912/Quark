@@ -130,6 +130,27 @@ function openFile() {
   });
 }
 
+function openFileFromPath(path) {
+  pywebview.api.open_file_path(path).then(function(response) {
+    let file = response.file;
+    let filebuffer = {};
+    filebuffer.path = file[0];
+    filebuffer.contents = file[1];
+    filebuffer.filename = file[2];
+    filebuffer.language = file[3];
+    filebuffer.id = randHex(6);
+    filebuffer.is_saved = true;
+    // Only add file to filebuffer if it doesn't already exist in filebuffer
+    if (buffers.getFiles().includes(filebuffer.path) !== true) {
+        buffers.addFile(filebuffer);
+    }
+    buffers.currentID = filebuffer.id;
+    editor.session.setMode("ace/mode/" + filebuffer.language);
+    editor.getSession().setValue(filebuffer.contents);
+    openedFilesPanel.innerHTML = sidebarBtnTemplate();
+  });
+}
+
 function updateBuffers() {
   buffers.getCurrentFile().contents = editor.getValue();
 }
@@ -253,6 +274,18 @@ function setMode(mode) {
     editor.session.setMode("ace/mode/" + mode);
 }
 
+function startup() {
+    // Start with default empty file unless file is provided
+    pywebview.api.get_startup_file().then(function(response) {
+        let file = response.file;
+        if (file !== "None") {
+            openFileFromPath(file)
+        } else {
+            newFile()
+        }
+    })
+}
+
 ace.require("ace/ext/language_tools");
 let editor = ace.edit("editor");
 editor.setOptions({
@@ -263,9 +296,6 @@ editor.setShowPrintMargin(false);
 editor.setTheme("ace/theme/one_dark");
 editor.setOption ("wrap", true);
 editor.container.style.lineHeight = 1.5
-// Start with default empty file
-newFile();
-
 
 let menus = {
   "File": {},
