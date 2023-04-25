@@ -1,6 +1,7 @@
 import webview
 import sys
 from pathlib import Path
+from fuzzyfinder import fuzzyfinder
 
 languages_map = {
     "": "plain_text",
@@ -36,6 +37,10 @@ languages_map = {
 def create_file(path):
     with open(path, "w") as f:
         f.write("")
+
+def folder_contents(path_str):
+    parent_folder = Path("/".join(path_str.split("/")[:-1])).expanduser()
+    return [str(p) for p in parent_folder.iterdir()]
 
 class Api():
   def __init__(self, file):
@@ -110,6 +115,12 @@ class Api():
       "file": [file, filename, language]
     }
     return response
+  
+  def file_suggestions(self, filename):
+    files = folder_contents(filename)
+    name = filename.split("/")[-1]
+    suggestions = fuzzyfinder(name, files)
+    return list(suggestions)
 
 def startup(window):
     window.evaluate_js("startup()")
