@@ -1,5 +1,7 @@
 # Quark
 
+> **IMPORTANT NOTE:** This repository has been moved to [Codeberg](https://codeberg.org). The new repository can be found [at this link](https://codeberg.org/songtech-0912/Quark). This repository is now **unmaintained**.
+
 A fast and beautiful editor, powered by `pywebview` and `Python`. Download it and try it out [here](release_notes/release-0.1.1-alpha.md).
 
 ![UI mockup of Quark](assets/mockup.png)
